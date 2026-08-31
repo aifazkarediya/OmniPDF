@@ -1,0 +1,6 @@
+{
+  "name": "PDF Companion & Toolkit",
+  "description": "Complete client-side PDF reader with instant word lookup, file-to-PDF converter, and full PDF manipulation toolkit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

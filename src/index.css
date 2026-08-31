@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* PDF.js Text Layer styling to enable clean text selection over the rendered canvas */
+.pdf-text-layer {
+  position: absolute;
+  text-align: initial;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  opacity: 1;
+  line-height: 1;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.pdf-text-layer > span,
+.pdf-text-layer span {
+  color: transparent !important;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  pointer-events: auto;
+}
+
+.pdf-text-layer ::selection {
+  background: rgba(99, 102, 241, 0.35) !important;
+  color: transparent !important;
+}
+
+/* Custom scrollbars for sidebars and thumbnails */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
