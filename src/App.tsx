@@ -10,44 +10,17 @@
  * in memory so you can easily read, look up words, or apply tools without re-uploading.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { PDFReader } from './components/reader/PDFReader';
 import { PDFToolkit } from './components/tools/PDFToolkit';
 import { FileConverter } from './components/converter/FileConverter';
-import { createSamplePDF } from './lib/sampleDoc';
 import { AppMode } from './types/pdf';
 
 export default function App() {
   const [currentMode, setCurrentMode] = useState<AppMode>('reader');
   const [pdfBuffer, setPdfBuffer] = useState<ArrayBuffer | null>(null);
-  const [documentName, setDocumentName] = useState<string>('Document.pdf');
-
-  // Load sample document automatically on initial mount so user has something to read and test right away
-  useEffect(() => {
-    const initSample = async () => {
-      try {
-        const sample = await createSamplePDF();
-        setPdfBuffer(sample.buffer);
-        setDocumentName(sample.fileName);
-      } catch (err) {
-        console.error('Error loading initial sample:', err);
-      }
-    };
-
-    initSample();
-  }, []);
-
-  const handleLoadSample = async () => {
-    try {
-      const sample = await createSamplePDF();
-      setPdfBuffer(sample.buffer);
-      setDocumentName(sample.fileName);
-      setCurrentMode('reader');
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [documentName, setDocumentName] = useState<string>('');
 
   const handleLoadNewFile = (buffer: ArrayBuffer, name: string) => {
     setPdfBuffer(buffer);
@@ -66,7 +39,6 @@ export default function App() {
       <Header
         currentMode={currentMode}
         onModeChange={setCurrentMode}
-        onLoadSample={handleLoadSample}
         hasActiveDocument={!!pdfBuffer}
         documentName={documentName}
       />
@@ -76,9 +48,8 @@ export default function App() {
         {currentMode === 'reader' && (
           <PDFReader
             pdfBuffer={pdfBuffer}
-            fileName={documentName}
+            fileName={documentName || 'Document.pdf'}
             onLoadNewFile={handleLoadNewFile}
-            onOpenSample={handleLoadSample}
           />
         )}
 
@@ -86,7 +57,7 @@ export default function App() {
           <div className="flex-1 overflow-y-auto bg-[#F3F4F6]">
             <PDFToolkit
               currentBuffer={pdfBuffer}
-              currentFileName={documentName}
+              currentFileName={documentName || 'Document.pdf'}
               onOpenReader={() => setCurrentMode('reader')}
             />
           </div>
@@ -107,7 +78,7 @@ export default function App() {
             <span>Ready</span>
           </div>
           <span className="text-gray-300">|</span>
-          <span className="truncate max-w-[250px]">{documentName}</span>
+          <span className="truncate max-w-[250px]">{documentName || 'No document loaded'}</span>
         </div>
         <div className="flex items-center gap-3">
           <span>Client-side WebAssembly Engine</span>

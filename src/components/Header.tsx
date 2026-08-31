@@ -7,12 +7,11 @@
 
 import React from 'react';
 import { AppMode } from '../types/pdf';
-import { BookOpen, Wrench, FileUp, ShieldCheck, Sparkles, FileText, Upload } from 'lucide-react';
+import { BookOpen, Wrench, FileUp, FileText } from 'lucide-react';
 
 interface HeaderProps {
   currentMode: AppMode;
   onModeChange: (mode: AppMode) => void;
-  onLoadSample: () => void;
   hasActiveDocument: boolean;
   documentName?: string;
   onOpenFileClick?: () => void;
@@ -21,10 +20,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentMode,
   onModeChange,
-  onLoadSample,
   hasActiveDocument,
   documentName,
-  onOpenFileClick,
 }) => {
   return (
     <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 shrink-0 z-40 sticky top-0 shadow-2xs">
@@ -95,30 +92,10 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Quick Action & Document Indicator */}
       <div className="flex items-center gap-2 sm:gap-3">
         {hasActiveDocument && documentName && (
-          <div className="hidden lg:flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 px-2.5 py-1 rounded-md max-w-[170px] truncate border border-gray-200">
+          <div className="flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 px-2.5 py-1 rounded-md max-w-[170px] truncate border border-gray-200">
             <FileText className="w-3.5 h-3.5 text-gray-400 shrink-0" />
             <span className="truncate">{documentName}</span>
           </div>
-        )}
-
-        {!hasActiveDocument ? (
-          <button
-            onClick={onLoadSample}
-            className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-md border border-red-200 transition-colors"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-red-600" />
-            <span className="hidden sm:inline">Try Sample PDF</span>
-            <span className="sm:hidden">Sample</span>
-          </button>
-        ) : (
-          <button
-            onClick={onLoadSample}
-            className="hidden md:flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 px-2 py-1 rounded transition-colors"
-            title="Reload Sample Document"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Sample</span>
-          </button>
         )}
 
         <div

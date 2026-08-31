@@ -25,7 +25,6 @@ import {
   PanelRightOpen,
   Download,
   Upload,
-  Sparkles,
   FileText,
   Search,
   RotateCw,
@@ -36,14 +35,12 @@ interface PDFReaderProps {
   pdfBuffer: ArrayBuffer | null;
   fileName?: string;
   onLoadNewFile: (buffer: ArrayBuffer, name: string) => void;
-  onOpenSample: () => void;
 }
 
 export const PDFReader: React.FC<PDFReaderProps> = ({
   pdfBuffer,
   fileName = 'Document.pdf',
   onLoadNewFile,
-  onOpenSample,
 }) => {
   const [pdfDoc, setPdfDoc] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -529,19 +526,12 @@ export const PDFReader: React.FC<PDFReaderProps> = ({
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
-                <label className="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg cursor-pointer shadow-xs transition-colors">
+              <div className="flex items-center justify-center pt-2">
+                <label className="w-full sm:w-auto px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg cursor-pointer shadow-xs transition-colors inline-flex items-center justify-center gap-2">
+                  <Upload className="w-4 h-4" />
                   <span>Browse PDF File</span>
                   <input type="file" accept="application/pdf" onChange={handleFileInput} className="hidden" />
                 </label>
-
-                <button
-                  onClick={onOpenSample}
-                  className="w-full sm:w-auto flex items-center justify-center space-x-1.5 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition-colors"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-red-600" />
-                  <span>Try Sample Document</span>
-                </button>
               </div>
             </div>
           ) : (
